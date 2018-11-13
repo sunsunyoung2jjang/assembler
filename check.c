@@ -25,7 +25,7 @@ int is_valid(char *op, char *args)
 	}while(token != '\0');
 
 	// source
-	if(source[0] = '%') ex1 = REG;
+	if(source[0] == '%') ex1 = REG;
 	else if(source[0] == '$') ex1 = IMM;
 	else if(source[index1] == ')') ex1 = ADD;
 	else ex1 = MEM;
