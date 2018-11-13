@@ -10,7 +10,7 @@ int is_valid(char *op, char *args)
 	//parsing
 	char token = args[i];
 	do{
-		source[++index] = token;
+		source[++index1] = token;
 		token = args[++i];
 		if(token == ',') break;
 	}while(token != '\0');
