@@ -2,35 +2,36 @@
 
 int instr_trans(char *op, char *args, char* mcode)
 {
+	char *m = (char*)malloc(sizeof(char)*20);	
+
 	// check syntax 
 	if(!is_valid(op, args)){
 		printf("Error: %s %s is not valid\n", op, args);
 		return 0;
 	}
 
-
-	strcpy(mcode, "AB CD EF");
-	for(int i=0;args[i]!=NULL;i++){
-	if((args[0]=='0'||args[0]=='(')&&args[i+3]=='a')
-		strcpy(mcode,"a1");
-	else if(args[2]=='a'&&(args[i+1]=='0'||args[i+1]=='('))
-		strcpy(mcode,"a3");
-	else if(args[0]=='%'&&args[i+1]=='%')
-		strcpy(mcode,"89");
-	else if(args[0]=='('&&args[i+1]=='%')
-		strcpy(mcode,"8b");
-	else if((args[0]=='-'||args[0]=='0')&&args[i+1]=='%')
-		strcpy(mcode,"8b");
-	else if(args[0]=='$'&&args[i+3]=='a')
-		strcpy(mcode,"b8");
-	else if(args[0]=='$'&&args[i+3]=='b')
-		strcpy(mcode,"bb");
-	else if(args[0]=='$'&&args[i+3]=='c')
-		strcpy(mcode,"b9");
-	else if(args[0]=='$'&&args[i+3]=='d')
-		strcpy(mcode,"ba");
-
+	if(ex1 == REG && ex2 == REG) m = "89";
+	else if(ex1 == ADD && ex2 == REG) m = "8b";
+	else if(ex1 == MEM && ex2 == REG) m = "a1";
+	else if(ex1 == REG && ex2 == MEM) m = "a3";
+	else {
+		if(destination[3] == 'x') {
+			if(destination[2] == 'a') m = "b8";
+			else if(destination[2] == 'c') m = "b9";
+			else if(destination[2] == 'd') m = "ba";
+			else if(destination[2] == 'b') m = "bb";
+		}
+		else if(destination[3] == 'p') {
+			if(destination[2] == 's') m = "bc";
+			else if(destination[2] == 'b') m = "bd";
+		}
+		else if(destination[3] == 'i') {
+			if(destination[2] == 's') m = "be";
+			else if(destination[2] == 'd') m = "bf";
+		}
 	}
 
+	strcpy(mcode, m);
+	free(m);
 	return 1;	
 }
